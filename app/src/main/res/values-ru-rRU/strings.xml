@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">MyTracker</string>
+    <string name="home">Дом</string>
+    <string name="settings">Настройки</string>
+    <string name="tracker">Трекер</string>
+    <string name="you_have_not_given_your_permission_to_determine_your_location">Вы не дали своего разрешения, для определения вашего нахождения!</string>
+    <string name="location_disabled">Местоположение отключено</string>
+    <string name="location_dialog_message">Вы хотите включить GPS?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="time">Время:</string>
+    <string name="average_speed">Средняя скорость:</string>
+    <string name="speed">Скорость:</string>
+    <string name="distance">Дистанция:</string>
+
+    <!--    //xml main_preference-->
+    <string name="update_time">Время обновления</string>
+    <string name="update_time_summary">Время обновления местоположения</string>
+    <string name="location">Mестоположение</string>
+    <string name="blue">Синий</string>
+    <string name="red">Красный</string>
+    <string name="black">Черный</string>
+    <string name="track_color_summary">Выберите цвет дорожки</string>
+    <string name="track_color">Цвет дорожки</string>
+
+</resources>

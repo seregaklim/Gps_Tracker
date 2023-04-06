@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">MyTracker</string>
+    <string name="home">Home</string>
+    <string name="settings">Settings</string>
+    <string name="tracker">Tracker</string>
+    <string name="you_have_not_given_your_permission_to_determine_your_location">You have not given your permission to determine your location!</string>
+    <string name="location_disabled">Location disabled</string>
+    <string name="location_dialog_message">Do you want enable GPS?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="time">Time:</string>
+    <string name="average_speed">Average speed:</string>
+    <string name="speed">Speed:</string>
+    <string name="distance">Distance:</string>
+
+    <!--    //xml main_preference-->
+    <string name="update_time">Update time</string>
+    <string name="update_time_summary">Location Update time</string>
+    <string name="location">Location</string>
+
+    <string name="blue">Blue</string>
+    <string name="red">Red</string>
+    <string name="black">Black</string>
+    <string name="track_color_summary">Choose track color</string>
+    <string name="track_color">Track color</string>
+
+
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--     //увидим с секундами-->
+    <string-array name="loc_time_update_name">
+        <item>3 sec</item>
+        <item>5 sec</item>
+        <item>10 sec</item>
+    </string-array>
+
+<!--    //значение, которое сохраним-->
+    <string-array name="loc_time_update_value">
+        <item>3 sec</item>
+        <item>5 sec</item>
+        <item>10 sec</item>
+    </string-array>
+
+
+    <!--     //цвет то что видит пользователь-->
+    <string-array name="color_name">
+        <item>@string/blue</item>
+        <item>@string/red</item>
+        <item>@string/black</item>
+    </string-array>
+
+    <!--    //значение, которое сохраним-->
+    <string-array name="color_value">
+        <item>#61ABEC</item>
+        <item>#C50A0A</item>
+        <item>#FF000000</item>
+    </string-array>
+
+
+</resources>
