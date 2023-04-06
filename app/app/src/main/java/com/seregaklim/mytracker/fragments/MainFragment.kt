@@ -2,8 +2,10 @@ package com.seregaklim.mytracker.fragments
 
 
 import android.Manifest
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
@@ -16,13 +18,17 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.seregaklim.mytracker.R
 import com.seregaklim.mytracker.databinding.FragmentMainBinding
+import com.seregaklim.mytracker.location.LocationModel
 import com.seregaklim.mytracker.service.LocationService
 import com.seregaklim.mytracker.utils.DialogManager
 import com.seregaklim.mytracker.utils.TimeUtils
 import com.seregaklim.mytracker.utils.сhekPermisson
+import com.seregaklim.mytracker.viewmodel.MainViewModel
 import org.osmdroid.config.Configuration
 import org.osmdroid.library.BuildConfig
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
@@ -30,15 +36,14 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 import java.util.*
 
 
+@Suppress("DEPRECATION")
 class MainFragment() : Fragment() {
     private lateinit var pLauncher: ActivityResultLauncher<Array<String>>
     private lateinit var binding: FragmentMainBinding
     private var isServiceRunning=false
     private var timer: Timer?=null
     private var startTime =0L
-   //следит за циклом жизни фрагмента
-    private val timeData = MutableLiveData<String>()
-
+    private val model:MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,6 +68,8 @@ class MainFragment() : Fragment() {
         checkLockPermisson()
         chekServiceState()
         updateTime()
+        registerLocReciver()
+        locationUpdates()
     }
 
     //проверка запуска сервича
@@ -101,14 +108,23 @@ class MainFragment() : Fragment() {
 
     }
 
-    private fun updateTime() {
-        timeData.observe(viewLifecycleOwner) {
-            binding.tvTime.text=it
+    private fun locationUpdates()= with(binding){
+        model.locationUpdates.observe(viewLifecycleOwner){
+            val distance ="${String.format("%.1f",it.distance)}m"
+            //переводим метры/секунду - в км/ч 3.6*it.velocity
+            val velocity ="${String.format("%.1f",3.6*it.velocity)}km/h"
 
+            tvDistance.text=distance
+            tvSpeed.text=velocity
         }
-
     }
 
+
+    private fun updateTime() {
+     model.timeData.observe(viewLifecycleOwner) {
+            binding.tvTime.text=it
+        }
+    }
 
     private fun startTimer() {
         //если таймер работаем, останавливаем
@@ -122,7 +138,7 @@ class MainFragment() : Fragment() {
             override fun run() {
                 //запускаем на основном потоке
                 activity?.runOnUiThread {
-                 timeData.value=getCurrentTime()
+                model.timeData.value=getCurrentTime()
                 }
             }
         }, 1, 1)
@@ -275,6 +291,24 @@ private fun getCurrentTime():String{
         } else {
             //работает
         }
+    }
+
+    //получает интенты
+    private val receiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, i: Intent?) {
+            if (i?.action == LocationService.LOC_MODEL_INTENT) {
+                val locmodel =
+                    i.getSerializableExtra(LocationService.LOC_MODEL_INTENT) as LocationModel
+
+                model.locationUpdates.value = locmodel
+            }
+        }
+    }
+
+    private fun registerLocReciver(){
+        val locFilter=IntentFilter(LocationService.LOC_MODEL_INTENT)
+        LocalBroadcastManager.getInstance(activity as AppCompatActivity)
+            .registerReceiver(receiver,locFilter)
     }
 
     companion object {

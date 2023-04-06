@@ -9,9 +9,9 @@
 
 <!--    //значение, которое сохраним-->
     <string-array name="loc_time_update_value">
-        <item>3 sec</item>
-        <item>5 sec</item>
-        <item>10 sec</item>
+        <item>3000</item>
+        <item>5000</item>
+        <item>1000</item>
     </string-array>
 
 

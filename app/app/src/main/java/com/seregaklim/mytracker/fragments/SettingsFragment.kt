@@ -2,6 +2,7 @@ package com.seregaklim.mytracker.fragments
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.seregaklim.mytracker.R
@@ -51,7 +52,7 @@ class SettingsFragment :PreferenceFragmentCompat(){
         timePref.title="$title: ${nameArray[pos]}"
     }
 
-    private fun onColorChange (value:String){
+    private fun onColorChange(value: String) {
         colorPref.icon?.setTint(Color.parseColor(value))
     }
 
@@ -66,12 +67,13 @@ class SettingsFragment :PreferenceFragmentCompat(){
         //можем показать любой текст
         val title = timePref.title.toString()
         val pos = valueArray.indexOf(pref?.getString("update_time_key", "3000"))
+
         timePref.title = "$title:${nameArray[pos]}"
 
 
         //цвет
-        val trackColor=pref?.getString("color_key","#61ABEC")
-       //цвет по умолчанию
+        val trackColor = pref?.getString("color_key", "#61ABEC")
+        //цвет по умолчанию
         colorPref.icon?.setTint(Color.parseColor(trackColor))
     }
 
